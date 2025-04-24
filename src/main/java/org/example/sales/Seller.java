@@ -1,21 +1,15 @@
-package org.example;
+package org.example.sales;
 
 import java.util.Objects;
 
-public class Product {
+public class Seller {
 
-	private final Category category;
 	private final String code;
 	private final String name;
 
-	public Product(String name, String code, Category category) {
-		this.name = name;
+	public Seller(String code, String name) {
 		this.code = code;
-		this.category = category;
-	}
-
-	public Category getCategory() {
-		return category;
+		this.name = name;
 	}
 
 	public String getCode() {
@@ -32,8 +26,8 @@ public class Product {
 			return true;
 		if (o == null || getClass() != o.getClass())
 			return false;
-		Product product = (Product) o;
-		return Objects.equals(code, product.code);
+		Seller seller = (Seller) o;
+		return Objects.equals(code, seller.code);
 	}
 
 	@Override

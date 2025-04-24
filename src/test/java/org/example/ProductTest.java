@@ -1,5 +1,7 @@
 package org.example;
 
+import org.example.products.Category;
+import org.example.products.Product;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 

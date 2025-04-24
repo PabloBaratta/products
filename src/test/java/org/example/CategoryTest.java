@@ -1,5 +1,6 @@
 package org.example;
 
+import org.example.products.Category;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -9,7 +10,7 @@ class CategoryTest {
 	@Test
 	void storesNameCorrectly() {
 		Category category = new Category("Books");
-		assertEquals("Books", category.getName());
+		assertEquals("Books", category.name());
 	}
 
 	@Test

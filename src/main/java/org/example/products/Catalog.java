@@ -1,5 +1,6 @@
-package org.example;
+package org.example.products;
 
+import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Optional;
@@ -15,5 +16,11 @@ public class Catalog {
 	public Optional<Double> getPriceOf(Product product) {
 		Objects.requireNonNull(product, "Product cannot be null");
 		return Optional.ofNullable(prices.get(product));
+	}
+
+	public List<Product> findBy(ProductSearchCriteria criteria) {
+		Objects.requireNonNull(criteria, "Search criteria cannot be null");
+
+		return prices.keySet().stream().filter(criteria::matches).toList();
 	}
 }

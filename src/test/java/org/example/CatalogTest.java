@@ -1,5 +1,9 @@
 package org.example;
 
+import org.example.products.Catalog;
+import org.example.products.Category;
+import org.example.products.CategorySearchCriteria;
+import org.example.products.Product;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -11,13 +15,12 @@ import static org.junit.jupiter.api.Assertions.*;
 class CatalogTest {
 
 	private Product productA;
-    private Catalog catalog;
+	private Catalog catalog;
 
 	@BeforeEach
 	void setUp() {
 		productA = new Product("Laptop", "P001", new Category("Electronics"));
 		var productB = new Product("Mouse", "P002", new Category("Electronics"));
-
 		catalog = new Catalog(Map.of(productA, 1500.0, productB, 25.0));
 	}
 
@@ -50,5 +53,19 @@ class CatalogTest {
 		Exception ex = assertThrows(NullPointerException.class, () -> new Catalog(null));
 
 		assertEquals("Prices map cannot be null", ex.getMessage());
+	}
+
+	@Test
+	void findByFindsBasedOnACategory() {
+
+		CategorySearchCriteria electronicsSearch = new CategorySearchCriteria(new Category("Electronics"));
+		assertEquals(2, catalog.findBy(electronicsSearch).size());
+	}
+
+	@Test
+	void findByDoesNotReturnBasedOnACategoryWhichDoesNotHaveProducts() {
+
+		CategorySearchCriteria fashionSearch = new CategorySearchCriteria(new Category("Fashion"));
+		assertEquals(0, catalog.findBy(fashionSearch).size());
 	}
 }
