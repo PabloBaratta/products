@@ -28,6 +28,10 @@ class SellerSales {
 		return rule.calculateCommission(sellerSales);
 	}
 
+	Optional<List<Sale>> getSales(Seller seller) {
+		return Optional.ofNullable(sales.get(seller));
+	}
+
 	private boolean isSellerRegistered(Seller seller) {
 		return sales.containsKey(seller);
 	}

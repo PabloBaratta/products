@@ -34,4 +34,9 @@ public class Seller {
 	public int hashCode() {
 		return Objects.hash(code);
 	}
+
+	@Override
+	public String toString() {
+		return String.format("Seller Code: %s, Name: %s", code, name);
+	}
 }

@@ -41,7 +41,7 @@ class SellerRegisterTest {
 
 	@Test
 	void testRegisterSeller() {
-		sellerRegister.register(sellerDto, 2000.0);
+		sellerRegister.register(sellerDto);
 		Optional<Double> salary = sellerRegister.getSalaryByCode(seller);
 		assertTrue(salary.isPresent(), "Salary should be present");
 		assertEquals(2000.0, salary.get(), "The salary should match the expected value");
@@ -49,23 +49,23 @@ class SellerRegisterTest {
 
 	@Test
 	void testRegisterSale() {
-		sellerRegister.register(sellerDto, 2000.0);
+		sellerRegister.register(sellerDto);
 		sellerRegister.registerSale(seller, product);
-		double commission = sellerRegister.calculateCommissions(seller);
+		double commission = sellerRegister.calculateCommissions(seller.getCode());
 		assertEquals(5.0, commission, "The commission should be 5% of 100");
 	}
 
 	@Test
 	void testCalculateCommissions() {
-		sellerRegister.register(sellerDto, 2000.0);
+		sellerRegister.register(sellerDto);
 		sellerRegister.registerSale(seller, product);
-		double commission = sellerRegister.calculateCommissions(seller);
+		double commission = sellerRegister.calculateCommissions(seller.getCode());
 		assertEquals(5.0, commission, "The commission should be 5% of the sale");
 	}
 
 	@Test
 	void testGetSalaryByCode() {
-		sellerRegister.register(sellerDto, 2000.0);
+		sellerRegister.register(sellerDto);
 
 		Optional<Double> salary = sellerRegister.getSalaryByCode(seller);
 
@@ -81,7 +81,7 @@ class SellerRegisterTest {
 
 	@Test
 	void testRegisterWithNullSeller() {
-		assertThrows(NullPointerException.class, () -> sellerRegister.register(null, 2000.0), "Seller cannot be null");
+		assertThrows(NullPointerException.class, () -> sellerRegister.register(null), "Seller cannot be null");
 	}
 
 	@Test

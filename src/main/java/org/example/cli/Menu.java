@@ -6,6 +6,11 @@ import java.util.stream.Collectors;
 
 public class Menu {
 	private final Map<Option, MenuCommand> commands = new EnumMap<>(Option.class);
+	private final ConsoleUi ui;
+
+	public Menu(ConsoleUi ui) {
+		this.ui = ui;
+	}
 
 	public void register(Option option, MenuCommand command) {
 		commands.put(option, command);
@@ -17,18 +22,19 @@ public class Menu {
 			try {
 				menuCommand.execute();
 			} catch (Exception e) {
-				System.out.println("Error: " + e.getMessage());
+				ui.printError("Error: " + e.getMessage());
 			}
 		} else if (option == Option.EXIT) {
 			System.exit(0);
 		} else {
-			System.out.println("Invalid Option");
+			ui.printError("Invalid Option");
 		}
 	}
 
 	@Override
 	public String toString() {
-		return commands.keySet().stream().filter(k -> k.getIndex() > 0).map(k -> k.getIndex() + ". " + k.name())
-				.collect(Collectors.joining());
+		return commands.keySet().stream().filter(k -> k.getIndex() > 0)
+				.map(k -> k.getIndex() + ". " + k.name().replace("_", " ")).collect(Collectors.joining("\n"));
 	}
+
 }

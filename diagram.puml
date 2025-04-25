@@ -1,0 +1,50 @@
+@startuml
+
+class Catalog
+class Category
+class CategorySearchCriteria
+class NameContainsSearchCriteria
+class Product
+interface ProductSearchCriteria
+class BasicCommissionRules
+interface CommissionRules
+class Sale
+class Seller
+class SellerDto
+class SellerRegister
+class SellerSalaries
+class SellerSales
+interface IdProvider
+class UUIDProvider
+class StoreService
+class ProductDto
+
+Catalog --> Product
+Catalog ..> ProductSearchCriteria
+CategorySearchCriteria --|> ProductSearchCriteria
+NameContainsSearchCriteria --|> ProductSearchCriteria
+Product --> Category
+ProductSearchCriteria ..> Product
+StoreService --> Catalog
+StoreService ..> ProductDto
+
+
+BasicCommissionRules --|> CommissionRules
+Sale --> Product
+Sale --> Seller
+SellerRegister --> CommissionRules
+SellerRegister --> IdProvider
+SellerRegister --> SellerSalaries
+SellerRegister --> SellerSales
+SellerRegister --> Catalog
+SellerRegister ..> SellerDto
+
+
+SellerSalaries --> Seller
+SellerSales --> Seller
+SellerSales --> Sale
+SellerSales ..> CommissionRules
+
+
+UUIDProvider --|> IdProvider
+@enduml

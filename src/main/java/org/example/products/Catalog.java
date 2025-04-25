@@ -10,7 +10,7 @@ public class Catalog {
 		this.prices = Objects.requireNonNull(prices, "Prices map cannot be null");
 	}
 
-	public Catalog(){
+	public Catalog() {
 		this(new HashMap<>());
 	}
 
@@ -30,5 +30,20 @@ public class Catalog {
 		if (price <= 0)
 			throw new IllegalArgumentException("Price must be greater than zero");
 		prices.put(product, price);
+	}
+
+	public List<ProductWithPrice> getAllProducts() {
+		List<ProductWithPrice> productsWithPrice = new ArrayList<>();
+		for (Map.Entry<Product, Double> entry : prices.entrySet()) {
+			productsWithPrice.add(new ProductWithPrice(entry.getKey(), entry.getValue()));
+		}
+		return productsWithPrice;
+	}
+
+	public record ProductWithPrice(Product product, double price) {
+		@Override
+		public String toString() {
+			return String.format("Product: %s | Price: %.2f", product, price);
+		}
 	}
 }
