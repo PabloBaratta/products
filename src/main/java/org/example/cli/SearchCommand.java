@@ -24,20 +24,13 @@ public class SearchCommand implements MenuCommand {
 
     @Override
     public void execute() {
-        ui.print("Search by:");
-
-        int i = 1;
-        List<String> keys = new ArrayList<>(criteriaMap.keySet());
-        for (String key : keys) {
-            ui.print(i + ". " + key);
-            i++;
-        }
+        List<String> options = printOptions();
 
         String input = ui.read("Option:");
         int option;
         try {
             option = Integer.parseInt(input);
-            if (option < 1 || option > keys.size()) {
+            if (option < 1 || option > options.size()) {
                 ui.print("Invalid option.");
                 return;
             }
@@ -46,7 +39,7 @@ public class SearchCommand implements MenuCommand {
             return;
         }
 
-        Supplier<ProductSearchCriteria> supplier = criteriaMap.get(keys.get(option - 1));
+        Supplier<ProductSearchCriteria> supplier = criteriaMap.get(options.get(option - 1));
         ProductSearchCriteria criteria = supplier.get();
 
         List<Product> results = catalog.findBy(criteria);
@@ -58,6 +51,18 @@ public class SearchCommand implements MenuCommand {
             results.forEach(product -> catalog.getPriceOf(product).ifPresent(price ->
                     ui.print(product + " - $" + price)));
         }
+    }
+
+    private List<String> printOptions() {
+        ui.print("Search by:");
+
+        int i = 1;
+        List<String> keys = new ArrayList<>(criteriaMap.keySet());
+        for (String key : keys) {
+            ui.print(i + ". " + key);
+            i++;
+        }
+        return keys;
     }
 
     private ProductSearchCriteria createNameCriteria() {

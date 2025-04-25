@@ -1,20 +1,21 @@
 package org.example.cli;
 
+import org.example.sales.SalesService;
 import org.example.sales.SellerRegister;
 
 public class CalculateCommissionCommand implements MenuCommand {
 
-	private final SellerRegister register;
 	private final ConsoleUi ui;
+	private final SalesService service;
 
-	public CalculateCommissionCommand(ConsoleUi ui, SellerRegister register) {
+	public CalculateCommissionCommand(ConsoleUi ui, SalesService service) {
 		this.ui = ui;
-		this.register = register;
+		this.service = service;
 	}
 	@Override
 	public void execute() {
 		String code = ui.read("Introduce seller code");
-		double commissions = register.calculateCommissions(code);
+		double commissions = service.calculateCommissions(code);
 		ui.print(String.format("The total commissions for seller with code '%s' are: $%.2f", code, commissions));
 	}
 }

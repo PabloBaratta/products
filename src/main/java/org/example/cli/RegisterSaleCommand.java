@@ -1,14 +1,14 @@
 package org.example.cli;
 
-import org.example.store.StoreService;
+import org.example.sales.SalesService;
 
 public class RegisterSaleCommand implements MenuCommand {
 	private final ConsoleUi ui;
-	private final StoreService storeService;
+	private final SalesService salesService;
 
-	public RegisterSaleCommand(ConsoleUi ui, StoreService storeService) {
+	public RegisterSaleCommand(ConsoleUi ui, SalesService salesService) {
 		this.ui = ui;
-		this.storeService = storeService;
+		this.salesService = salesService;
 	}
 
 	@Override
@@ -16,6 +16,6 @@ public class RegisterSaleCommand implements MenuCommand {
 		String productCode = ui.read("Product code:");
 		String sellerCode = ui.read("Seller code;");
 
-		storeService.registerSale(productCode, sellerCode);
+		salesService.registerSale(productCode, sellerCode);
 	}
 }

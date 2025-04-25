@@ -1,11 +1,16 @@
 @startuml
-
+package products {
 class Catalog
 class Category
 class CategorySearchCriteria
 class NameContainsSearchCriteria
 class Product
 interface ProductSearchCriteria
+class ProductDto
+
+}
+
+package sales {
 class BasicCommissionRules
 interface CommissionRules
 class Sale
@@ -14,11 +19,32 @@ class SellerDto
 class SellerRegister
 class SellerSalaries
 class SellerSales
+class SalesService
+}
+
+package util {
 interface IdProvider
 class UUIDProvider
-class StoreService
-class ProductDto
+class SequentialIdProvider
+}
 
+package store {
+class StoreService
+}
+
+package cli {
+class Menu
+interface MenuCommand
+enum Option
+class AddProductCommand
+class AddSellerCommand
+class CalculateCommissionCommand
+class ListSellersCommand
+class RegisterSaleCommand
+class ShowCatalogCommand
+class SearchCommand
+class ConsoleUi
+}
 Catalog --> Product
 Catalog ..> ProductSearchCriteria
 CategorySearchCriteria --|> ProductSearchCriteria
@@ -26,18 +52,21 @@ NameContainsSearchCriteria --|> ProductSearchCriteria
 Product --> Category
 ProductSearchCriteria ..> Product
 StoreService --> Catalog
+StoreService --> IdProvider
 StoreService ..> ProductDto
 
 
 BasicCommissionRules --|> CommissionRules
 Sale --> Product
 Sale --> Seller
-SellerRegister --> CommissionRules
+SalesService --> CommissionRules
 SellerRegister --> IdProvider
 SellerRegister --> SellerSalaries
 SellerRegister --> SellerSales
-SellerRegister --> Catalog
+SalesService --> Catalog
 SellerRegister ..> SellerDto
+SalesService --> SellerRegister
+SalesService --> Sale
 
 
 SellerSalaries --> Seller
@@ -45,6 +74,29 @@ SellerSales --> Seller
 SellerSales --> Sale
 SellerSales ..> CommissionRules
 
-
 UUIDProvider --|> IdProvider
+SequentialIdProvider --|> IdProvider
+
+AddProductCommand --|> MenuCommand
+AddSellerCommand --|> MenuCommand
+CalculateCommissionCommand --|> MenuCommand
+ListSellersCommand --|> MenuCommand
+RegisterSaleCommand --|> MenuCommand
+ShowCatalogCommand --|> MenuCommand
+SearchCommand --|> MenuCommand
+
+AddProductCommand --> StoreService
+AddSellerCommand --> SellerRegister
+CalculateCommissionCommand --> SalesService
+ListSellersCommand --> SellerRegister
+RegisterSaleCommand --> SalesService
+SearchCommand --> Catalog
+SearchCommand --> ProductSearchCriteria
+ShowCatalogCommand --> Catalog
+
+MenuCommand --> ConsoleUi
+
+Menu *-- MenuCommand
+Menu *-- Option
+Menu --> ConsoleUi
 @enduml
