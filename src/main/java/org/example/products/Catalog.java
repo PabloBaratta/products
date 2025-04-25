@@ -23,4 +23,10 @@ public class Catalog {
 
 		return prices.keySet().stream().filter(criteria::matches).toList();
 	}
+
+	 public void addProduct(Product product, double price) {
+        Objects.requireNonNull(product, "Product cannot be null");
+        if (price <= 0) throw new IllegalArgumentException("Price must be greater than zero");
+        prices.put(product, price);
+    }
 }
