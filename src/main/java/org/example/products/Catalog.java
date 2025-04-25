@@ -1,9 +1,6 @@
 package org.example.products;
 
-import java.util.List;
-import java.util.Map;
-import java.util.Objects;
-import java.util.Optional;
+import java.util.*;
 
 public class Catalog {
 
@@ -11,6 +8,10 @@ public class Catalog {
 
 	public Catalog(Map<Product, Double> prices) {
 		this.prices = Objects.requireNonNull(prices, "Prices map cannot be null");
+	}
+
+	public Catalog(){
+		this(new HashMap<>());
 	}
 
 	public Optional<Double> getPriceOf(Product product) {
@@ -24,9 +25,10 @@ public class Catalog {
 		return prices.keySet().stream().filter(criteria::matches).toList();
 	}
 
-	 public void addProduct(Product product, double price) {
-        Objects.requireNonNull(product, "Product cannot be null");
-        if (price <= 0) throw new IllegalArgumentException("Price must be greater than zero");
-        prices.put(product, price);
-    }
+	public void addProduct(Product product, double price) {
+		Objects.requireNonNull(product, "Product cannot be null");
+		if (price <= 0)
+			throw new IllegalArgumentException("Price must be greater than zero");
+		prices.put(product, price);
+	}
 }
